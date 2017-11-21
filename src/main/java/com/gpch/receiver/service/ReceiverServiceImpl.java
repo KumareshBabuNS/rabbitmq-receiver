@@ -13,13 +13,18 @@ import com.rabbitmq.client.Envelope;
 
 public class ReceiverServiceImpl implements ReceiverService	 {
 
-	public void openChannel(String host, String queue) throws IOException, TimeoutException, InterruptedException {
+	private static final String HOST = "localhost";
+	private static final String USER = "guest";
+	private static final String PASSWORD = "admin";
+	
+	public void openChannel(String exchange, String routingKey) throws IOException, TimeoutException, InterruptedException {
 		ConnectionFactory factory = new ConnectionFactory();
-		factory.setHost(host);
+		factory.setHost(HOST);
+		factory.setUsername(USER);
+		factory.setPassword(PASSWORD);
 		Connection connection = factory.newConnection();
 		Channel channel = connection.createChannel();
-
-		channel.queueDeclare(queue, false, false, false, null);
+		channel.queueDeclare(routingKey, true, false, false, null);
 		System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
 		Consumer consumer = new DefaultConsumer(channel) {
@@ -30,7 +35,7 @@ public class ReceiverServiceImpl implements ReceiverService	 {
 				System.out.println(" [x] Received '" + message + "'");
 			}
 		};
-		channel.basicConsume(queue, true, consumer);
+		channel.basicConsume(routingKey, true, consumer);
 		
 	}
 

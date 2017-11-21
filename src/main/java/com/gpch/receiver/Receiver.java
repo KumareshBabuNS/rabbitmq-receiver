@@ -7,13 +7,13 @@ import com.gpch.receiver.service.ReceiverServiceImpl;
 
 public class Receiver {
 
-	private static final String QUEUE = "hello";
-	private static final String HOST = "localhost";
+	private static final String EXCHANGE = "com.gpch";
+	private static final String ROUTING_KEY = "blue";
 
 	public static void main(String[] args)
 			throws java.io.IOException, TimeoutException, InterruptedException {
 		ReceiverService receiverService = new ReceiverServiceImpl();
-		receiverService.openChannel(HOST, QUEUE);
+		receiverService.openChannel(EXCHANGE, ROUTING_KEY);
 		
 	}
 

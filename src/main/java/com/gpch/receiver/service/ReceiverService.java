@@ -5,6 +5,6 @@ import java.util.concurrent.TimeoutException;
 
 public interface ReceiverService {
 	
-	public void openChannel(String host, String queue) throws IOException, TimeoutException, InterruptedException;
+	public void openChannel(String exchange, String routingKey) throws IOException, TimeoutException, InterruptedException;
 
 }
